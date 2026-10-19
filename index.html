@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#1d4ea3">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="블랙타이드">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<title>블랙 타이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;600&family=Pirata+One&display=swap">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gem" viewBox="0 0 32 32"><path d="M9 5h14l7 8-14 17L2 13z" fill="#e14fd6" stroke="#4a1046" stroke-width="2.2" stroke-linejoin="round"/><path d="M9 5h14l7 8H2z" fill="#ff9df1"/><path d="M2 13h28L16 30z" fill="#c63bbb"/><path d="M11 13l5 17 5-17" fill="#e66ee0"/><path d="M9 5h14l7 8-14 17L2 13z" fill="none" stroke="#4a1046" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wood" viewBox="0 0 32 32"><g stroke="#3d220d" stroke-width="2" stroke-linejoin="round"><rect x="3" y="15" width="24" height="9" rx="2" fill="#a96a35"/><rect x="6" y="7" width="24" height="9" rx="2" fill="#cf8f4f"/></g><path d="M9 11h14M7 19h12" stroke="#8a5222" stroke-width="1.6" stroke-linecap="round"/><circle cx="26.5" cy="11.5" r="2" fill="#e9b47a"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="#ffc928" stroke="#7a4b00" stroke-width="2.2"/><circle cx="16" cy="16" r="9" fill="#ffdd5c" stroke="#e8a00e" stroke-width="2"/><path d="M16 10v12M12 15h8M13 22c1 1 5 1 6 0" stroke="#c98300" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="16" cy="9.5" r="1.6" fill="none" stroke="#c98300" stroke-width="1.6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 32 32"><path d="M5 17l7 7L27 8" fill="none" stroke="#1d3a0f" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17l7 7L27 8" fill="none" stroke="#5fd84a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-block" viewBox="0 0 32 32"><g stroke="#2b2f3a" stroke-width="2" stroke-linejoin="round"><path d="M16 3l12 6v14l-12 6-12-6V9z" fill="#c9cdd6"/><path d="M4 9l12 6 12-6" fill="none"/><path d="M16 15v14" /></g><path d="M16 15l12-6v14l-12 6z" fill="#9aa1ae"/><path d="M16 15L4 9v14l12 6z" fill="#b6bcc7"/><path d="M16 3l12 6-12 6L4 9z" fill="#e6e9ef"/></symbol>
+  <symbol id="i-hammer" viewBox="0 0 32 32"><path d="M6 27l12-12" stroke="#3d220d" stroke-width="6" stroke-linecap="round"/><path d="M6 27l12-12" stroke="#c98a4a" stroke-width="3" stroke-linecap="round"/><path d="M13 9l6-6 10 10-6 6z" fill="#9aa4b4" stroke="#2b2f3a" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 32 32"><path d="M16 3L28 16h-7v12H11V16H4z" fill="#58cf4b" stroke="#16360c" stroke-width="2.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chest-w" viewBox="0 0 40 36"><g stroke="#3a1d08" stroke-width="2.2" stroke-linejoin="round"><path d="M4 15h32v17H4z" fill="#b5652c"/><path d="M4 15c0-8 6-11 16-11s16 3 16 11z" fill="#d17a38"/><path d="M4 15h32" /><rect x="9" y="4.5" width="4" height="27.5" fill="#f2c14e"/><rect x="27" y="4.5" width="4" height="27.5" fill="#f2c14e"/><rect x="17" y="12" width="6" height="8" rx="1" fill="#ffd95a"/></g></symbol>
+  <symbol id="i-chest-g" viewBox="0 0 40 36"><g stroke="#4a2a00" stroke-width="2.2" stroke-linejoin="round"><path d="M4 15h32v17H4z" fill="#e3a02a"/><path d="M4 15c0-8 6-11 16-11s16 3 16 11z" fill="#ffc94a"/><path d="M4 15h32"/><rect x="9" y="4.5" width="4" height="27.5" fill="#fff3b0"/><rect x="27" y="4.5" width="4" height="27.5" fill="#fff3b0"/><rect x="17" y="12" width="6" height="8" rx="1" fill="#e04a8a"/></g><path d="M33 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#fff"/></symbol>
+  <symbol id="i-chest-b" viewBox="0 0 40 36"><g stroke="#10234a" stroke-width="2.2" stroke-linejoin="round"><path d="M4 15h32v17H4z" fill="#3a6fd0"/><path d="M4 15c0-8 6-11 16-11s16 3 16 11z" fill="#5a92f0"/><path d="M4 15h32"/><rect x="9" y="4.5" width="4" height="27.5" fill="#dfe8f6"/><rect x="27" y="4.5" width="4" height="27.5" fill="#dfe8f6"/><rect x="17" y="12" width="6" height="8" rx="1" fill="#ffd95a"/></g></symbol>
+  <symbol id="i-shop" viewBox="0 0 40 40"><g stroke="#3a1608" stroke-width="2.2" stroke-linejoin="round"><rect x="6" y="18" width="28" height="16" fill="#c97a3a"/><rect x="10" y="22" width="20" height="8" fill="#7a3a14"/><path d="M3 18l3-11h28l3 11z" fill="#fff"/></g><path d="M8.5 7l-2 11h5l1.5-11zM18 7l-.6 11h5.2L22 7zM27.5 7l1.5 11h5L32 7z" fill="#e8402f"/><path d="M3 18l3-11h28l3 11z" fill="none" stroke="#3a1608" stroke-width="2.2" stroke-linejoin="round"/><path d="M3 18q3.5 4 7 0q3.5 4 7 0q3 4 6 0q3.5 4 7 0q3.5 4 7 0" fill="#e8402f" stroke="#3a1608" stroke-width="2"/></symbol>
+  <symbol id="i-map" viewBox="0 0 40 40"><path d="M5 9l9-4 12 4 9-4v26l-9 4-12-4-9 4z" fill="#f3dca4" stroke="#4a2c0c" stroke-width="2.2" stroke-linejoin="round"/><path d="M14 5v26M26 9v26" stroke="#c9a464" stroke-width="1.6"/><path d="M9 26c4-2 5-7 10-7s6-5 9-6" fill="none" stroke="#8a4a1a" stroke-width="2" stroke-dasharray="2.5 2.5" stroke-linecap="round"/><path d="M26 10l5 5M31 10l-5 5" stroke="#e8402f" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="i-swords" viewBox="0 0 40 40"><g stroke-linecap="round"><path d="M8 32L31 7M32 32L9 7" stroke="#1d2433" stroke-width="7"/><path d="M8 32L31 7M32 32L9 7" stroke="#e3ecf5" stroke-width="3.6"/><path d="M6 25l9 9M34 25l-9 9" stroke="#1d2433" stroke-width="6.5"/><path d="M6 25l9 9M34 25l-9 9" stroke="#f0b22a" stroke-width="3.4"/></g><circle cx="5.5" cy="34.5" r="3" fill="#e8402f" stroke="#1d2433" stroke-width="1.8"/><circle cx="34.5" cy="34.5" r="3" fill="#e8402f" stroke="#1d2433" stroke-width="1.8"/></symbol>
+  <symbol id="i-ship" viewBox="0 0 40 40"><g stroke="#2a1606" stroke-width="2.2" stroke-linejoin="round"><path d="M19 4v24" /><path d="M20 6c8 2 11 8 11 14H20z" fill="#fff6dc"/><path d="M19 9c-6 2-9 7-9 12h9z" fill="#f1e2bc"/><path d="M4 26h32l-5 9H9z" fill="#9a5426"/><path d="M19 4h7v4h-7z" fill="#222"/></g><path d="M5 30h30" stroke="#f0b22a" stroke-width="2"/></symbol>
+  <symbol id="i-crew" viewBox="0 0 40 40"><g stroke="#11131a" stroke-width="2.2" stroke-linejoin="round"><path d="M3 24c5-10 29-10 34 0-5 6-29 6-34 0z" fill="#2a2a33"/><path d="M10 21c0-10 4-15 10-15s10 5 10 15c-6 2-14 2-20 0z" fill="#33333d"/></g><path d="M4 24c6 5 26 5 32 0" stroke="#f0b22a" stroke-width="2" fill="none"/><circle cx="20" cy="15" r="4" fill="#fff"/><path d="M16 21l8-3M24 21l-8-3" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="18.6" cy="14.6" r="1" fill="#222"/><circle cx="21.4" cy="14.6" r="1" fill="#222"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M14 2h4l1 4 3 1.5 3.5-2 3 3-2 3.5L28 15l2 1v-0 4l-4 1-1.5 3 2 3.5-3 3-3.5-2L17 30h-4l-1-4-3-1.5-3.5 2-3-3 2-3.5L4 17l-2-1v-4l4-1 1.5-3-2-3.5 3-3 3.5 2L13 2z" fill="#9fb0c6" stroke="#2a3446" stroke-width="2" stroke-linejoin="round"/><circle cx="16" cy="16" r="5" fill="#5a6b84" stroke="#2a3446" stroke-width="2"/></symbol>
+</svg>
+<div class="app">
+<div class="phone" id="phone">
+    <canvas id="cv" aria-label="블랙 타이드 게임 화면"></canvas>
+    <div class="ui" id="ui">
+      <div class="topbar" id="topbar">
+        <div class="prof" id="prof"><img id="profImg" alt=""><span class="tx">검은바다 선장</span></div>
+        <div class="res">
+          <span><svg class="ico"><use href="#i-gem"/></svg><b class="tx" id="rGem">10</b></span>
+          <span><svg class="ico"><use href="#i-coin"/></svg><b class="tx" id="rGold">1520</b></span>
+        </div>
+      </div>
+
+      <section class="scr" data-s="lobby">
+        <div class="lb-prog" id="lbProg" role="button" tabindex="0" aria-label="항해 지도 열기">
+          <div class="lb-num tx" id="lbNum"><span class="lb-tag tx">항해</span>1</div>
+          <div class="lb-bar"><b id="lbFill"></b><i style="left:20%"></i><i style="left:40%"></i><i style="left:60%"></i><i style="left:80%"></i><span class="tx" id="lbTxt"></span></div><span class="lb-map tx">🗺 지도 보기</span>
+          <div class="lb-next"><img id="lbNext" alt=""><em>⭐</em><span>보스 보상</span></div>
+        </div>
+        <div class="lb-hint">화면을 좌우로 드래그하면 배를 둘러볼 수 있어요</div>
+        <button class="lb-chest" id="lbChest" type="button"><svg class="ico"><use href="#i-chest-g"/></svg><span class="tx" id="lbChestN">보물상자</span></button>
+        <button class="btn btn-y lb-go" id="btnGo" type="button"><span class="tx">출항!</span></button>
+      </section>
+
+      <section class="scr" data-s="build" hidden>
+        <div class="bd-count"><svg class="ico"><use href="#i-block"/></svg><b class="tx" id="bdCount">0/22</b></div>
+        <button class="btn btn-b bd-skin" id="bdSkin" type="button"><span class="tx">🎨 배 스킨</span></button><button class="btn btn-o bd-rebuild" id="bdRebuild" type="button"><svg class="ico"><use href="#i-hammer"/></svg><span class="tx">재건</span></button>
+        <div class="bd-labels" id="bdLabels"></div>
+        <div class="bd-rows"><span class="tx">층</span><div class="bd-tabs" id="bdTabs"><button type="button" data-r="0">앞줄</button><button type="button" data-r="1">중간줄</button><button type="button" data-r="2">뒷줄</button></div></div>
+        <div class="bd-panel" id="bdPanel"></div>
+        <div id="bdSkinM"></div>
+      </section>
+
+      <section class="scr" data-s="crew" hidden><div class="cr" id="cr"></div></section>
+
+      <section class="scr" data-s="shop" hidden>
+        <div class="sh-title tx">보물 상자</div>
+        <div class="sh-pity tx" id="shPity"></div>
+        <div class="sh-opts">
+          <button class="sh-opt" type="button" data-k="wood"><svg class="ico"><use href="#i-chest-w"/></svg><span class="nm tx">나무 상자</span><span class="odds">일반 80% · 희귀 18%<br>전설 2%</span><span class="price"><svg class="ico"><use href="#i-coin"/></svg><b class="tx">300</b></span></button>
+          <button class="sh-opt" type="button" data-k="gold"><svg class="ico"><use href="#i-chest-g"/></svg><span class="nm tx">황금 상자</span><span class="odds">희귀 85%<br>전설 15%</span><span class="price"><svg class="ico"><use href="#i-gem"/></svg><b class="tx">10</b></span></button>
+        </div>
+        <div id="shReveal"></div>
+      </section>
+
+      <section class="scr" data-s="map" hidden><div class="mp" id="mp"></div></section>
+
+      <section class="scr" data-s="battle" hidden>
+        <div class="bt-top">
+          <div class="bt-side me"><div class="bt-ic"><svg class="ico"><use href="#i-ship"/></svg><b class="tx" id="bHp0">100%</b></div><div class="bt-nb"><i><b id="bBar0" style="width:100%"></b></i><span class="tx">붉은 갈매기호</span></div></div>
+          <div class="bt-vs tx">VS</div>
+          <div class="bt-side en"><div class="bt-ic"><svg class="ico"><use href="#i-ship"/></svg><b class="tx" id="bHp1">100%</b></div><div class="bt-nb"><i><b id="bBar1" style="width:100%"></b></i><span class="tx" id="bName1"></span></div></div>
+        </div>
+        <div class="bt-crew"><div class="bt-cl" id="bCl0"></div><div class="bt-turn"><span class="tx" id="bTurn">턴 1</span><b class="tx" id="bTimer">30</b></div><div class="bt-cl" id="bCl1"></div></div>
+        <div class="bt-left" id="bLeft">
+          <span class="tx">바람</span>
+          <svg viewBox="-30 -30 60 60" style="width:15cqw;height:15cqw"><g id="bWindG"><path d="M-21 -6 H5 V-15 L23 0 L5 15 V6 H-21 Z" fill="#b8350f" transform="translate(0 3)"/><path d="M-21 -6 H5 V-15 L23 0 L5 15 V6 H-21 Z" fill="#ff6a2a" stroke="#4a1400" stroke-width="2.4" stroke-linejoin="round"/></g></svg>
+          <span class="tx wv" id="bWind">0.0</span>
+          
+        </div>
+        <div class="bt-pick" id="bPick"></div>
+        <svg class="bt-sling" id="bSling"></svg>
+        <svg class="bt-cross" id="bCross" viewBox="-50 -50 100 100"><circle r="42" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="7"/><circle id="bRing" r="42" fill="none" stroke="#ffd23a" stroke-width="7" stroke-dasharray="0 264" stroke-linecap="round" transform="rotate(-90)"/><g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M-20 -28 h-8 v56 h8"/><path d="M20 -28 h8 v56 h-8"/></g><circle r="4" fill="#fff"/></svg>
+        <div class="bt-pred tx" id="bPred"></div>
+        <div class="bt-vig" id="bVig"></div>
+        <div class="bt-flash" id="bFlash"></div>
+        <div class="bt-banner me tx" id="bBanMe">내 턴</div>
+        <div class="bt-banner en tx" id="bBanEn">적의 턴</div>
+        <div class="bt-intro tx" id="bIntro"><em>나</em><br>선공</div>
+        <div class="bt-hint" id="bHint">화면을 누른 채 아래로 끌면 힘이 모이고, 좌우로 끌면 방향이 바뀝니다. 놓으면 발사! 처음 누른 ✕로 돌아가 놓으면 취소</div>
+        <div class="bt-cap tx" id="bCap"></div>
+        <button class="btn btn-b bt-mute" id="bMute" type="button" aria-label="소리 켜고 끄기">🔊</button>
+        <button class="btn btn-b bt-exit" id="bExit" type="button"><span class="tx">나가기</span></button>
+        <div id="bDmg"></div>
+        <div id="bResult"></div>
+      </section>
+
+      <nav class="nav" id="nav" aria-label="메뉴">
+        <button type="button" data-go="shop" aria-label="상점"><svg class="ico"><use href="#i-shop"/></svg><span class="tx">상점</span></button>
+        <button type="button" data-go="lobby" aria-label="전투"><svg class="ico"><use href="#i-swords"/></svg><span class="tx">전투</span></button>
+        <button type="button" data-go="build" aria-label="배"><svg class="ico"><use href="#i-ship"/></svg><span class="tx">배</span><em class="badge tx" id="navBadge" hidden>2</em></button>
+        <button type="button" data-go="crew" aria-label="동료"><svg class="ico"><use href="#i-crew"/></svg><span class="tx">동료</span></button>
+      </nav>
+      <div class="toast tx" id="toast"></div>
+      <div class="loading tx" id="loading">항구 준비 중…</div>
+    </div>
+  </div>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
