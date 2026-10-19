@@ -40,7 +40,7 @@
     <canvas id="cv" aria-label="블랙 타이드 게임 화면"></canvas>
     <div class="ui" id="ui">
       <div class="topbar" id="topbar">
-        <div class="prof" id="prof"><img id="profImg" alt=""><span class="tx">검은바다 선장</span></div>
+        <div class="prof" id="prof"><img id="profImg" alt=""><span class="tx" id="profName">선장</span></div>
         <div class="res">
           <span><svg class="ico"><use href="#i-gem"/></svg><b class="tx" id="rGem">10</b></span>
           <span><svg class="ico"><use href="#i-coin"/></svg><b class="tx" id="rGold">1520</b></span>
@@ -75,6 +75,7 @@
         <div class="sh-opts">
           <button class="sh-opt" type="button" data-k="wood"><svg class="ico"><use href="#i-chest-w"/></svg><span class="nm tx">나무 상자</span><span class="odds">일반 80% · 희귀 18%<br>전설 2%</span><span class="price"><svg class="ico"><use href="#i-coin"/></svg><b class="tx">300</b></span></button>
           <button class="sh-opt" type="button" data-k="gold"><svg class="ico"><use href="#i-chest-g"/></svg><span class="nm tx">황금 상자</span><span class="odds">희귀 85%<br>전설 15%</span><span class="price"><svg class="ico"><use href="#i-gem"/></svg><b class="tx">10</b></span></button>
+          <button class="sh-opt sh-ten" type="button" data-k="gold10"><svg class="ico"><use href="#i-chest-g"/></svg><span class="nm tx">황금 상자 ×10</span><span class="odds">한 번에 10개 열기</span><span class="price"><svg class="ico"><use href="#i-gem"/></svg><b class="tx">100</b></span></button>
         </div>
         <div id="shReveal"></div>
       </section>
@@ -83,7 +84,7 @@
 
       <section class="scr" data-s="battle" hidden>
         <div class="bt-top">
-          <div class="bt-side me"><div class="bt-ic"><svg class="ico"><use href="#i-ship"/></svg><b class="tx" id="bHp0">100%</b></div><div class="bt-nb"><i><b id="bBar0" style="width:100%"></b></i><span class="tx">붉은 갈매기호</span></div></div>
+          <div class="bt-side me"><div class="bt-ic"><svg class="ico"><use href="#i-ship"/></svg><b class="tx" id="bHp0">100%</b></div><div class="bt-nb"><i><b id="bBar0" style="width:100%"></b></i><span class="tx" id="bName0">붉은 갈매기호</span></div></div>
           <div class="bt-vs tx">VS</div>
           <div class="bt-side en"><div class="bt-ic"><svg class="ico"><use href="#i-ship"/></svg><b class="tx" id="bHp1">100%</b></div><div class="bt-nb"><i><b id="bBar1" style="width:100%"></b></i><span class="tx" id="bName1"></span></div></div>
         </div>

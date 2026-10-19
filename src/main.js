@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { V3, PI, D2R, rand, pick, clamp, GRAD, T, noOL, thinOL, M, cyl, sph, box, flat, cvTex, beam, mergeBoxes, mulberry, ghostOf } from './util.js';
-import { CLS, RAR, FACBG, CH, CHM, eff, MAXF, MAXB, defLayout, S, STAGES, stats, shNeed, upCost, roomCost, roomHp, BUILD_COST } from './data.js';
+import { STARTER, MIRROR, PIRATE_SHIPS, CLS, RAR, FACBG, CH, CHM, eff, MAXF, MAXB, defLayout, S, STAGES, stats, shNeed, upCost, roomCost, roomHp, BUILD_COST } from './data.js';
 import { audio, SFX, vib } from './audio.js';
 import { throwItem, makeChar, makeVM, vmPose, throwPose } from './crew.js';
 
@@ -253,7 +253,7 @@ function setScreen(s){
   if(s==='lobby')enterLobby();if(s==='build')enterBuild();if(s==='crew')renderCrew();if(s==='shop')enterShop();if(s==='map')renderMap();
   resize();}
 nav.addEventListener('click',e=>{const b=e.target.closest('button');if(b){SFX.click();setScreen(b.dataset.go);}});
-function refreshRes(){$('#rGem').textContent=S.gem;$('#rGold').textContent=S.gold;}
+function refreshRes(){if($('#gem10'))$('#gem10').textContent=S.gem;$('#rGem').textContent=S.gem;$('#rGold').textContent=S.gold;}
 let toastT=0;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1400);}
 const RBG={
  c:'linear-gradient(160deg,#c3ccd8,#8794aa)',
@@ -275,11 +275,11 @@ function buildLobbyScene(){const sc=new THREE.Scene();LB.env=makeEnv(sc);LB.sc=s
   for(const x of [-1.8,1.8])for(const z of [-2.1,2.1])M(cyl(.12,.14,1.6,8),pd,pier,x,.1,z);M(box(.15,.15,4.8),pd,pier,1.95,.6,0);
   LB.pier=pier;LB.ship=null;LB.crew=[];LB.az=.62;LB.drag=null;}
 function enterLobby(){if(!LB.sc)buildLobbyScene();
-  if(LB.ship)LB.sc.remove(LB.ship.g);LB.ship=makeShip({fac:'pirate',skin:S.skin,layout:S.layout,crew:[],sails:'full'});LB.sc.add(LB.ship.g);
+  if(LB.ship)LB.sc.remove(LB.ship.g);LB.ship=makeShip({fac:S.fac||'pirate',skin:S.skin,layout:S.layout,crew:[],sails:'full'});LB.sc.add(LB.ship.g);
   LB.crew.forEach(m=>LB.pier.remove(m));LB.crew=[];
   S.equip.forEach((id,i)=>{const bar=new THREE.Group();bar.position.set(.8,.68,-1.5+i*1.0);LB.pier.add(bar);M(cyl(.3,.3,.52,14),T('#8a5228'),bar,0,.26,0);for(const y of [.08,.44])M(cyl(.315,.315,.06,14),T('#3a3e48'),bar,0,y,0);
     M(box(.02,.34,.24),T(id===S.cap?'#f0c040':'#c8382d'),bar,.32,.2,0);const m=makeChar(id);m.position.y=.52;m.rotation.y=.95-(i-1.5)*.08;bar.add(m);LB.crew.push(bar);});
-  $('#profImg').src=PORT[S.cap];$('#lbNum').lastChild.textContent='1';$('#lbFill').style.width=(S.stage/6*100)+'%';$('#lbTxt').textContent='⚓ '+S.stage+' / 6';$('#lbNext').src=PORT.alex;$('#lbNext').parentElement.style.background=FACBG.navy;
+  $('#profImg').src=PORT[S.cap]||'';$('#profName').textContent=S.fac==='navy'?'푸른바다 제독':'검은바다 선장';$('#lbNum').lastChild.textContent='1';$('#lbFill').style.width=(S.stage/6*100)+'%';$('#lbTxt').textContent='⚓ '+S.stage+' / 6';$('#lbNext').src=PORT.alex;$('#lbNext').parentElement.style.background=FACBG.navy;
   $('#lbChestN').textContent='보물상자 ×'+S.chests;}
 function renderDaily(){const d=$('#daily');d.innerHTML='';S.daily.forEach((v,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','일일 상자 '+(i+1));
   b.innerHTML='<svg class="ico"><use href="#'+(i===2?'i-chest-b':i===4?'i-chest-g':'i-chest-w')+'"/></svg>'+(v===1?'<svg class="ck"><use href="#i-check"/></svg>':'');if(v===2)b.className='ready';
@@ -299,7 +299,7 @@ function buildBuildScene(){const sc=new THREE.Scene();sc.background=new THREE.Co
 function enterBuild(){if(!BD.sc)buildBuildScene();ensurePlace();rebuildBuild();}
 function rebuildBuild(){
   if(BD.ship)BD.sc.remove(BD.ship.g);
-  BD.ship=makeShip({fac:'pirate',skin:S.skin,layout:S.layout,crew:placedCrew(),sails:'furled'});BD.ship.g.position.y=1.12;BD.ship.g.remove(BD.ship.foam);BD.sc.add(BD.ship.g);
+  BD.ship=makeShip({fac:S.fac||'pirate',skin:S.skin,layout:S.layout,crew:placedCrew(),sails:'furled'});BD.ship.g.position.y=1.12;BD.ship.g.remove(BD.ship.foam);BD.sc.add(BD.ship.g);
   const r=BD.row;
   BD.ship.rooms.forEach(rm=>{rm.grp.visible=rm.r===r;if(rm.r===r){rm.walls[0].userData.orig=rm.walls[0].material;rm.walls[0].material=ghostOf(rm.walls[0].material,.2);}});
   BD.ship.crew.forEach(c=>c.mesh.visible=!!c.room&&c.room.r===r);
@@ -357,8 +357,8 @@ function startDrag(ev,id){ev.preventDefault();const pr=phone.getBoundingClientRe
 function updBuild(dt,t){const cy=1.12+DECK+1.3;BD.cam.position.set(12.5,cy+3.4,2.6);BD.cam.lookAt(0,cy,0);animShip(BD.ship,t,dt,0,false);BD.ship.g.position.y+=1.12;if(BD.labelsDirty)placeLabels();}
 
 /* ----- CREW ----- */
-let crSel='bargo',crSwap=null;
-function renderCrew(){
+let crSel=null,crSwap=null;
+function renderCrew(){if(!crSel||!CHM[crSel])crSel=S.cap||Object.keys(S.owned)[0]||'bargo';
   const el=$('#cr');const id=crSel,c=CHM[id],own=S.owned[id],lv=own?own.lv:1,st=stats(id,lv),nx=stats(id,lv+1),k=CLS[c.cls];const need=shNeed(lv),eq=S.equip.includes(id);
   let h='';if(crSwap)h+='<div class="cr-swap">'+CHM[crSwap].s+'와(과) 바꿀 장착 동료를 누르세요</div>';
   h+='<div class="cr-top"><div class="cr-name tx">'+c.n+'</div><div class="chips"><span class="chip c-'+c.rar+' tx">'+RSTAR[c.rar]+' '+RAR[c.rar].n+'</span><span class="chip f-'+c.fac+' tx">'+FICO[c.fac]+' '+FNAME[c.fac]+'</span><span class="chip k tx">'+k.ic+' '+k.n+'</span></div><div class="cr-main">'+
@@ -379,7 +379,7 @@ function renderCrew(){
   el.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=b.dataset.a;
     if(a==='up'){if(own.sh<need)return toast('조각이 '+(need-own.sh)+'개 더 필요해요');if(S.gold<upCost(lv))return toast('금화가 부족해요');S.gold-=upCost(lv);own.sh-=need;own.lv++;refreshRes();SFX.magic();toast(c.s+' Lv.'+own.lv+'!');}
     if(a==='cap'){S.cap=id;SFX.magic();toast(c.s+'을(를) 선장으로 임명했어요');}
-    if(a==='eq')crSwap=id;
+    if(a==='eq'){if(S.equip.length<4){S.equip.push(id);ensurePlace();toast(c.s+' 장착!');}else crSwap=id;}
     renderCrew();});}
 
 /* ----- SHOP ----- */
@@ -396,6 +396,7 @@ function makeChest(k){const g=new THREE.Group();const gold=k==='gold';const wood
 function enterShop(){if(!SH.sc)buildShopScene();setChest('wood');$('#shPity').textContent='전설 확정까지 '+S.pity+'회';$('#shReveal').innerHTML='';SH.anim=null;}
 function setChest(k){if(SH.chest)SH.isl.remove(SH.chest.g);SH.chest=makeChest(k);SH.chest.g.position.y=.5;SH.isl.add(SH.chest.g);SH.kind=k;}
 document.querySelectorAll('.sh-opt').forEach(b=>b.onclick=()=>{if(SH.anim)return;const k=b.dataset.k;
+  if(k==='gold10'){if(S.gem<100)return toast('보석이 부족해요');S.gem-=100;refreshRes();setChest('gold');const res=[];for(let n=0;n<10;n++)res.push(roll('gold'));SH.anim={t:0,res,multi:1};return;}
   if(k==='wood'){if(S.chests>0)S.chests--;else if(S.gold>=300)S.gold-=300;else return toast('금화가 부족해요');}else{if(S.gem<10)return toast('보석이 부족해요');S.gem-=10;}
   refreshRes();setChest(k);SH.anim={t:0,res:roll(k)};});
 function roll(k){S.pity--;let r;const x=Math.random()*100;if(S.pity<=0){r='l';S.pity=50;}else if(k==='gold')r=x<15?'l':'r';else r=x<2?'l':x<20?'r':'c';
@@ -405,7 +406,7 @@ function updShop(dt,t){SH.env.update(t);SH.cam.position.set(0,2.4,5.6);SH.cam.lo
   if(SH.anim){const a=SH.anim;a.t+=dt;
     if(a.t<1){ch.g.rotation.z=Math.sin(a.t*40)*.08*a.t;ch.g.position.y=.5+Math.abs(Math.sin(a.t*12))*.08;if(!a.s1){a.s1=1;SFX.creak(.3);}}
     else{if(!a.s2){a.s2=1;SFX.magic();}ch.g.rotation.z=0;const o=Math.min(1,(a.t-1)/.35);ch.lid.rotation.x=-1.9*o;ch.glow.material.opacity=Math.max(0,.9-(a.t-1)*.6);ch.glow.scale.setScalar(1+o*3);}
-    if(a.t>1.5&&!a.shown){a.shown=1;showReveal(a.res);}}}
+    if(a.t>1.5&&!a.shown){a.shown=1;a.multi?showMulti(a.res):showReveal(a.res);}}}
 function showReveal(res){const c=CHM[res.id],o=S.owned[res.id];const R=$('#shReveal');
   R.innerHTML='<div class="reveal"><span class="rr tx" style="--rc:'+RAR[c.rar].col+'">'+RAR[c.rar].n+'</span><div class="rc" style="--rc:'+RAR[c.rar].col+';--c:'+cardBg(res.id)+'">'+facB(res.id)+(res.isNew?'<span class="new tx">신규!</span>':'')+'<img src="'+PORT[res.id]+'" alt=""></div><span class="rn tx">'+c.n+'</span><span class="rs">'+c.sig+'</span><span class="rs">'+(res.isNew?'새 동료를 얻었어요':'조각 '+o.sh+'/'+shNeed(o.lv))+'</span><button class="btn btn-y" type="button" style="height:12cqw;padding:0 10cqw;font-size:5.4cqw"><span class="tx">확인</span></button></div>';
   R.querySelector('button').onclick=()=>{R.innerHTML='';SH.anim=null;setChest(SH.kind);};}
@@ -434,14 +435,14 @@ function newWind(){const a=rand(0,PI*2),s=Math.round(rand(2,16)*10)/10;B.wind={x
 function startBattle(si){
   const st=STAGES[si];if(B)disposeBattle();
   const sc=new THREE.Scene();const env=makeEnv(sc);const capE=st.crew.find(c=>CHM[c].rar==='l');
-  const A=makeShip({fac:'pirate',skin:S.skin,layout:S.layout,crew:placedCrew(),sails:'furled',cap:S.cap});
-  const E=makeShip({fac:st.fac,layout:st.layout,crew:autoPlace(st.layout,st.crew.map(id=>({id,lv:1+Math.floor(si/2)}))),sails:'furled',cap:capE});
+  const A=makeShip({fac:S.fac||'pirate',skin:S.skin,layout:S.layout,crew:placedCrew(),sails:'furled',cap:S.cap});
+  const E=makeShip({fac:enemyFac(st),layout:st.layout,crew:autoPlace(st.layout,enemyCrew(st).map(id=>({id,lv:1+Math.floor(si/2)}))),sails:'furled',cap:capE});
   A.g.position.x=-6.6;E.g.position.x=6.6;E.g.rotation.y=PI;A.side=0;E.side=1;A.baseX=-6.6;E.baseX=6.6;sc.add(A.g,E.g);
   const cam=new THREE.PerspectiveCamera(55,1,.03,400);sc.add(cam);
   B={si,st,sc,env,cam,ships:[A,E],phase:'intro',pt:0,turn:1,sel:0,yaw:0,baseYaw:0,ang:{},power:0,projs:[],fx:[],timer:30,eIdx:0,shake:0,slow:0,rc:0,cp:new V3(),cl:new V3(),snap:true,vm:null,pull:null,dmg:[],known:[new Set(),new Set()],prepped:false,pred:null,done:0,ePow:0,wind:{x:0,z:0,s:0}};
   newWind();B.streaks=windStreaks(sc);
   B.sel=Math.max(0,A.crew.findIndex(c=>c.id===S.cap));
-  $('#bName1').textContent=st.ship;$('#bResult').innerHTML='';$('#bDmg').innerHTML='';$('#bSling').innerHTML='';['#bIntro','#bBanMe','#bBanEn'].forEach(id=>banner(id,false));
+  $('#bName1').textContent=shipName(si);$('#bName0').textContent=myShipName();$('#bResult').innerHTML='';$('#bDmg').innerHTML='';$('#bSling').innerHTML='';['#bIntro','#bBanMe','#bBanEn'].forEach(id=>banner(id,false));
   buildBattleHud();setScreen('battle');resize();}
 function disposeBattle(){B=null;}
 function buildBattleHud(){
@@ -711,5 +712,34 @@ function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
     else if(cur==='battle'&&B){updBattle(dt,TT);if(B)draw(B.sc,B.cam);}}
   requestAnimationFrame(loop);}
 function boot(){try{makePortraits();makeSkinPreviews();}catch(e){console.error(e);}
-  refreshRes();buildLobbyScene();setScreen('lobby');$('#loading').remove();updNavBadge();requestAnimationFrame(loop);}
+  refreshRes();buildLobbyScene();setScreen('lobby');$('#loading').remove();updNavBadge();requestAnimationFrame(loop);if(!S.started)startOnboarding();}
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>setTimeout(boot,30));else setTimeout(boot,30);
+
+/* ================= ONBOARDING (첫 시작) ================= */
+function enemyFac(st){return S.fac==='navy'?'pirate':(st.fac==='pirate'?'navy':st.fac);}
+function enemyCrew(st){return st.crew.map(id=>{const c=CHM[id];return c.fac===S.fac&&MIRROR[id]?MIRROR[id]:id;});}
+function shipName(si){return S.fac==='navy'?PIRATE_SHIPS[si]:STAGES[si].ship;}
+function myShipName(){return S.fac==='navy'?'HMS 새벽별호':'붉은 갈매기호';}
+function showMulti(list){const R=$('#shReveal');const best=list.reduce((a,b)=>({l:3,r:2,c:1}[CHM[b.id].rar]>{l:3,r:2,c:1}[CHM[a.id].rar]?b:a));
+  R.innerHTML='<div class="reveal multi"><span class="rn tx">10연 결과</span><div class="mgrid">'+list.map((r,n)=>'<div class="card rr-'+CHM[r.id].rar+'" style="--c:'+cardBg(r.id)+';animation-delay:'+(n*.08)+'s"><img src="'+PORT[r.id]+'" alt="">'+facB(r.id)+(r.isNew?'<span class="nw tx">NEW</span>':'')+'<span class="mn tx">'+CHM[r.id].s+'</span></div>').join('')+'</div>'+
+   '<span class="rs">'+(CHM[best.id].rar==='l'?'⭐ 전설 '+CHM[best.id].n+' 획득!':'새 동료 '+list.filter(r=>r.isNew).length+'명')+'</span><button class="btn btn-y" type="button" style="height:12cqw;padding:0 10cqw;font-size:5.4cqw"><span class="tx">확인</span></button></div>';
+  SFX.win();R.querySelector('button').onclick=()=>{R.innerHTML='';SH.anim=null;setChest('wood');};}
+function startOnboarding(){const O=document.createElement('div');O.className='ob';$('#ui').appendChild(O);
+  const step1=()=>{O.innerHTML='<div class="ob-logo tx">BLACK TIDE</div><div class="ob-sub tx">어느 바다의 편에 설까요?</div><div class="ob-two">'+
+    [['pirate','☠','해적','자유와 약탈의 바다',['bargo','isabel']],['navy','⚓','해군','질서와 화력의 함대',['alex','eliza']]].map(([f,ic,n,d,ls])=>
+      '<button type="button" class="ob-fac f-'+f+'" data-f="'+f+'"><span class="ob-ic">'+ic+'</span><span class="tx ob-n">'+n+'</span><span class="ob-d">'+d+'</span><span class="ob-ls">'+ls.map(id=>'<img src="'+PORT[id]+'" alt="">').join('')+'</span></button>').join('')+'</div><div class="ob-foot">진영은 처음부터 다시 시작할 때만 바꿀 수 있어요 (프로필 버튼)</div>';
+    O.querySelectorAll('.ob-fac').forEach(b=>b.onclick=()=>{SFX.click();step2(b.dataset.f);});};
+  const step2=f=>{const ls=STARTER[f].legends;O.innerHTML='<div class="ob-sub tx">첫 전설 동료를 고르세요</div><div class="ob-two">'+ls.map(id=>{const c=CHM[id],k=CLS[c.cls];
+      return '<button type="button" class="ob-leg" data-id="'+id+'"><div class="card rr-l" style="--c:'+cardBg(id)+'"><img src="'+PORT[id]+'" alt="">'+facB(id)+'</div><span class="tx ob-n">'+c.n+'</span><span class="chip k tx">'+k.ic+' '+k.n+'</span><span class="ob-d">⚡ '+c.tr.t+'</span><span class="ob-d">👑 '+c.cap+'</span></button>';}).join('')+
+    '</div><button type="button" class="btn btn-b ob-back"><span class="tx">← 진영 다시 고르기</span></button>';
+    O.querySelectorAll('.ob-leg').forEach(b=>b.onclick=()=>{SFX.magic();finish(f,b.dataset.id);});O.querySelector('.ob-back').onclick=()=>{SFX.click();step1();};};
+  const finish=(f,leg)=>{const team=[leg,...STARTER[f].commons[leg]];S.fac=f;S.stage=0;S.pity=50;S.gem=Math.max(S.gem,200);S.layout=defLayout();S.owned={};team.forEach((id,n)=>S.owned[id]={lv:n?1:2,sh:0});S.equip=team.slice();S.cap=leg;S.place={};
+    if(f==='navy'){S.skin='navy';S.skins.navy=1;}S.started=true;crSel=leg;ensurePlace();
+    O.innerHTML='<div class="ob-sub tx">동료들이 합류했어요!</div><div class="ob-team">'+team.map(id=>'<div class="card rr-'+CHM[id].rar+'" style="--c:'+cardBg(id)+'"><img src="'+PORT[id]+'" alt="">'+facB(id)+(id===leg?'<span class="capm">👑</span>':'')+'<span class="mn tx">'+CHM[id].s+'</span></div>').join('')+'</div>'+
+      '<div class="ob-gift"><svg class="ico"><use href="#i-gem"/></svg><span class="tx">신규 선장 선물: 보석 200개</span><small>황금 상자 20개를 열 수 있어요 · 상점에서 10개 한 번에 열기</small></div>'+
+      '<button type="button" class="btn btn-y ob-go"><span class="tx">항해 시작!</span></button>';SFX.win();
+    O.querySelector('.ob-go').onclick=()=>{O.remove();refreshRes();setScreen('lobby');toast('상점에서 동료를 더 모아보세요!');};};
+  step1();}
+function resetGame(){try{localStorage.removeItem('blacktide.save.v1');}catch(e){}location.reload();}
+$('#prof').onclick=()=>{const P=document.createElement('div');P.className='ob ob-small';P.innerHTML='<div class="ob-box"><div class="tx ob-n">'+(S.fac==='navy'?'⚓ 해군':'☠ 해적')+' 선장</div><div class="ob-d">처음부터 다시 시작하면 진영을 다시 고를 수 있어요. 지금까지의 진행은 모두 사라집니다.</div><button type="button" class="btn btn-o" data-r><span class="tx">처음부터 다시 시작</span></button><button type="button" class="btn btn-b" data-c><span class="tx">닫기</span></button></div>';
+  $('#ui').appendChild(P);let armed=false;P.querySelector('[data-c]').onclick=()=>P.remove();P.querySelector('[data-r]').onclick=e=>{if(!armed){armed=true;e.currentTarget.querySelector('span').textContent='정말 다시 시작하기';return;}resetGame();};};

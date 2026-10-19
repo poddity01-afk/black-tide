@@ -45,11 +45,14 @@ export const defLayout=()=>[
  [[2,2,2,2],[1,2,2,1],[1,1,1,1]],
  [[0,1,1,0],[0,2,2,0],[0,0,0,0]],
  [[0,0,0,0],[0,0,0,0],[0,0,0,0]]];
-export const S={gem:10,wood:480,gold:1520,stage:2,pity:47,chests:1,
- owned:{bargo:{lv:3,sh:2},fin:{lv:2,sh:4},tom:{lv:2,sh:1},lu:{lv:3,sh:3},ray:{lv:2,sh:2},hans:{lv:1,sh:1}},
- equip:['bargo','lu','ray','tom'],cap:'bargo',layout:defLayout(),
- place:{bargo:{f:1,r:0,c:1},lu:{f:0,r:1,c:0},ray:{f:0,r:0,c:3},tom:{f:1,r:1,c:2}},
- daily:[1,1,1,2,0],skin:'pirate',skins:{pirate:1,clipper:1}};
+export const S={started:false,fac:null,gem:200,gold:600,stage:0,pity:50,chests:1,
+ owned:{},equip:[],cap:null,layout:defLayout(),place:{},
+ daily:[0,0,0,0,0],skin:'pirate',skins:{pirate:1,clipper:1}};
+// 진영 선택 시 받는 동료: 전설 1명(직접 선택) + 같은 진영 일반 2명
+export const STARTER={pirate:{legends:['bargo','isabel'],commons:{bargo:['tom','lu'],isabel:['fin','lu']}},navy:{legends:['alex','eliza'],commons:{alex:['emma','otto'],eliza:['hans','otto']}}};
+// 해군을 고르면 적은 해적: 같은 자리의 상대 진영 동료로 바꿔서 등장
+export const MIRROR={hans:'fin',emma:'tom',otto:'lu',gray:'ray',bruno:'mago',rian:'kid',alex:'bargo',eliza:'isabel',fin:'hans',tom:'emma',lu:'otto',ray:'gray',mago:'bruno',kid:'rian',bargo:'alex',isabel:'eliza'};
+export const PIRATE_SHIPS=['해적 쪽배','검은 돛배','상어 이빨호','붉은 해골호','검은 상어호','해적왕의 함선'];
 export const pad=l=>{while(l.length<MAXF)l.push([[0,0,0,0],[0,0,0,0],[0,0,0,0]]);return l;};
 export const STAGES=[
  {name:'갈매기 여울',ship:'해군 순찰선',fac:'navy',crew:['hans','emma','otto'],layout:pad([[[1,1,1,1],[1,1,1,1],[0,1,1,0]],[[0,1,0,0],[0,1,1,0],[0,0,0,0]]])},
